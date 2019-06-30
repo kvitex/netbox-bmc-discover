@@ -40,7 +40,7 @@ def metrics_output():
     except Exception as Error:
         print('PyNetbox: ', Error)
         exit(-1) 
-    device_list = []
+    sd_list = []
     nb_ip_addresses = dict(map(lambda x: (x.interface.id, str(ip_interface(x).ip)), nb.ipam.ip_addresses.all()))
     startTime = time.time()
     for bmc_interface in nb.dcim.interfaces.filter(mgmt_only=True):
@@ -54,16 +54,20 @@ def metrics_output():
             if str(nb_secret.role) in cfg['secret_roles']:
                 secret = nb_secret.plaintext
         if (bmc_interface_ip is not None) and (device_vendor is not None) and (secret is not None):
-            device_list.append(
+            sd_list.append(
                 {
-                    'hostname': str(bmc_interface.device),
-                    'type': device_vendor,
-                    'secret': secret,
-                    'ip': bmc_interface_ip
+                    'labels': {
+                        'hostname': str(bmc_interface.device),
+                        'type': device_vendor,
+                        'secret': secret,
+                        'ip': bmc_interface_ip
+                    },
+                    'targets': [bmc_interface_ip, ]
+                    
                 }
             )
     with open(cfg['output_file'], 'w+') as output_file:
-        print(yaml.dump(device_list, output_file, default_flow_style=False))
+        print(yaml.dump(sd_list, output_file, default_flow_style=False))
     metrics = [
         '<pre style="word-wrap: break-word; white-space: pre-wrap;">',
         'netbox_bmc_discover_up 1',
