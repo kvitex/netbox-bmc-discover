@@ -10,3 +10,4 @@ vendors:
     netbox: 'Supermicro'
 secret_roles:
   - 'SNMP v2 RO'
+output_file: 'snmp_bmc_netbox.yml'
