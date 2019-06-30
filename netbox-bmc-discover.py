@@ -69,11 +69,12 @@ def metrics_output():
     with open(cfg['output_file'], 'w+') as output_file:
         print(yaml.dump(sd_list, output_file, default_flow_style=False))
     metrics = [
-        '<pre style="word-wrap: break-word; white-space: pre-wrap;">',
+        '#',
         'netbox_bmc_discover_up 1',
-        'netbox_bmc_disover_duration {}'.format(time.time() - startTime)
+        'netbox_bmc_disover_duration {}'.format(time.time() - startTime),
+        '#'
     ]
-    return '\r\n'.join(metrics)
+    return '\n'.join(metrics)
     
             
 
