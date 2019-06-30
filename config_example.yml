@@ -1,0 +1,12 @@
+netbox:
+  url: 'http://netbox.url'
+  private_key_file: 'netbox.key'
+  token: 'token'
+  ssl_verify: False
+vendors:
+  - id: 'qct'
+    netbox: 'Quanta Cloud Technology'
+  - id: 'supermicro'
+    netbox: 'Supermicro'
+secret_roles:
+  - 'SNMP v2 RO'
