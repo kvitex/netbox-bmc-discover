@@ -53,11 +53,13 @@ def metrics_output():
         for nb_secret in nb.secrets.secrets.filter(device_id=bmc_interface.device.id):
             if str(nb_secret.role) in cfg['secret_roles']:
                 secret = nb_secret.plaintext
-        if (bmc_interface_ip is not None) and (device_vendor is not None) and (secret is not None):
+        if (bmc_interface_ip is not None) and (device_vendor is not None) and (secret is not None) and (str(bmc_interface.device.status) == 'Active'):
             sd_list.append(
                 {
                     'labels': {
                         'hostname': str(bmc_interface.device),
+                        'device_role': str(bmc_interface.device.device_role),
+                        'site': str(bmc_interface.device.site),
                         'type': device_vendor,
                         'secret': secret,
                         'ip': bmc_interface_ip
