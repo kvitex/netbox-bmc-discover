@@ -71,7 +71,7 @@ def metrics_output():
     metrics = [
         '#',
         'netbox_bmc_discover_up 1',
-        'netbox_bmc_discover_duration {}'.format(time.time() - startTime),
+        'netbox_bmc_disover_duration {}'.format(time.time() - startTime),
         '#'
     ]
     return '\n'.join(metrics)
