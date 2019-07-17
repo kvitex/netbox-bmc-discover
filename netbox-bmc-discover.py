@@ -41,7 +41,7 @@ def metrics_output():
         print('PyNetbox: ', Error)
         exit(-1) 
     sd_list = []
-    nb_ip_addresses = dict(map(lambda x: (x.interface.id, str(ip_interface(x).ip)), nb.ipam.ip_addresses.all()))
+    nb_ip_addresses = dict(map(lambda x: (getattr(x.interface, 'id', 0), str(ip_interface(x).ip)), nb.ipam.ip_addresses.all()))
     startTime = time.time()
     for bmc_interface in nb.dcim.interfaces.filter(mgmt_only=True):
         bmc_interface_ip = nb_ip_addresses.get(bmc_interface.id, None)
